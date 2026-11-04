@@ -34,7 +34,6 @@ function Animatable:play(animation, playing, looping)
         if animation ~= self.animation then
             self.animation_index = 1
             self.animation_timer = self.animation_timers[animation][self.animation_index]
-            print(self.animation_timer)
         end
         self.animation = animation
     end
@@ -56,11 +55,11 @@ function Animatable:update(dt)
     self.image = self.animations[self.animation][self.animation_index]
 end
 
-function Animatable:draw(love, x, y, w)
+function Animatable:draw(love, x, y, w, h)
     if self.facing_right then
-        love.graphics.draw(self.texture, self.image, x - w/2, y, 0, 1, 1)
+        love.graphics.draw(self.texture, self.image, x - w/2, y - h/2, 0, 1, 1)
     else
-        love.graphics.draw(self.texture, self.image, x + w/2, y, 0, -1, 1)
+        love.graphics.draw(self.texture, self.image, x + w/2, y - h/2, 0, -1, 1)
     end
 end
 

@@ -9,6 +9,12 @@ local screen = { width = 320, height = 180 }
 local ticks = 0
 local tick_period = 1
 
+local collidable = require("src.scripts.world.collidable")
+local world = require("src.scripts.world.world")
+
+local w = world:new()
+
+
 function love.load()
     screen.width, screen.height = love.graphics.getDimensions()
     love.graphics.setDefaultFilter("nearest", "nearest")
@@ -16,6 +22,7 @@ function love.load()
     canvas = love.graphics.newCanvas(screen.width, screen.height)
     canvas_data.scale = math.min(screen.width / canvas:getWidth(), screen.height / canvas:getHeight())
     player.init(love)
+    world.init(love)
 end
 
 
@@ -28,6 +35,8 @@ function love.update(dt)
     end
 
     player.update(dt)
+    w:update(dt)
+    player.animate(dt)
     input.update(dt)
 end
 
@@ -39,6 +48,7 @@ function love.draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.rectangle("fill", 10, 10, 10, 10)
 
+    w:draw(love)
     player.draw(love)
 
     love.graphics.setCanvas()
